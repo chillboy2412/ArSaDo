@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ArSaDo — Your Space to Get Things Done</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-theme="light">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="brand">
+            <h1>ArSaDo</h1>
+            <p>Your little space to get things done.</p>
+        </div>
+
+        <div class="clock-card">
+            <span id="clock">00:00</span>
+        </div>
+
+        <section class="motivation">
+            <p id="quote-en" class="quote-en">
+                "Small steps still count."
+            </p>
+
+            <p id="quote-id" class="quote-id">
+                Langkah kecil tetap berarti.
+            </p>
+        </section>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <div class="todo-header">
+
+            <div>
+                <h2>My Tasks</h2>
+                <p id="task-count">0 tasks</p>
+            </div>
+
+            <button
+                type="button"
+                class="theme-button"
+                id="theme-button"
+                aria-label="Pilih tema">
+                🎨
+            </button>
+
+        </div>
+
+
+        <section class="todo-list" id="todo-list"></section>
+
+
+        <button
+            type="button"
+            class="add-task-button"
+            id="add-task-button">
+
+            <span>+</span>
+            <span>Add Task</span>
+
+        </button>
+
+    </main>
+
+
+    <!-- ================= ADD TASK MODAL ================= -->
+
+    <div class="modal-overlay" id="task-modal">
+
+        <div class="modal task-modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <h2 id="task-modal-title">New Task</h2>
+                    <p class="modal-subtitle">
+                        Plan it your way.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="close-button"
+                    id="close-task-modal"
+                    aria-label="Tutup">
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- TASK TYPE -->
+
+            <div class="form-group">
+
+                <label>Task Type</label>
+
+                <div class="task-type-options">
+
+                    <button
+                        type="button"
+                        class="task-type-option active"
+                        data-type="daily">
+                        <span>☀️</span>
+                        <strong>Daily</strong>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="task-type-option"
+                        data-type="monthly">
+                        <span>📅</span>
+                        <strong>Monthly</strong>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="task-type-option"
+                        data-type="yearly">
+                        <span>🗓️</span>
+                        <strong>Yearly</strong>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="task-type-option"
+                        data-type="goal">
+                        <span>🎯</span>
+                        <strong>Goal</strong>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TASK INPUT -->
+
+            <div class="form-group">
+
+                <label for="task-input">
+                    Task / Goal
+                </label>
+
+                <input
+                    type="text"
+                    id="task-input"
+                    placeholder="What do you want to accomplish?"
+                    autocomplete="off">
+
+            </div>
+
+
+            <!-- DAILY SETTINGS -->
+
+            <div
+                class="schedule-section"
+                id="daily-settings">
+
+                <div class="form-group">
+
+                    <label>Choose Day</label>
+
+                    <div class="weekday-options">
+
+                        <button type="button" class="weekday-option" data-day="0">Sen</button>
+                        <button type="button" class="weekday-option" data-day="1">Sel</button>
+                        <button type="button" class="weekday-option" data-day="2">Rab</button>
+                        <button type="button" class="weekday-option" data-day="3">Kam</button>
+                        <button type="button" class="weekday-option" data-day="4">Jum</button>
+                        <button type="button" class="weekday-option" data-day="5">Sab</button>
+                        <button type="button" class="weekday-option" data-day="6">Min</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MONTHLY SETTINGS -->
+
+            <div
+                class="schedule-section"
+                id="monthly-settings"
+                hidden>
+
+                <div class="date-grid">
+
+                    <div class="form-group">
+                        <label for="month-start">
+                            From
+                        </label>
+
+                        <input
+                            type="month"
+                            id="month-start">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="month-end">
+                            Until
+                        </label>
+
+                        <input
+                            type="month"
+                            id="month-end">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- YEARLY SETTINGS -->
+
+            <div
+                class="schedule-section"
+                id="yearly-settings"
+                hidden>
+
+                <div class="date-grid">
+
+                    <div class="form-group">
+                        <label for="year-start">
+                            From
+                        </label>
+
+                        <input
+                            type="number"
+                            id="year-start"
+                            placeholder="2027"
+                            min="2000"
+                            max="2100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="year-end">
+                            Until
+                        </label>
+
+                        <input
+                            type="number"
+                            id="year-end"
+                            placeholder="2027"
+                            min="2000"
+                            max="2100">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- GOAL SETTINGS -->
+
+            <div
+                class="schedule-section"
+                id="goal-settings"
+                hidden>
+
+                <div class="form-group">
+
+                    <label for="goal-date">
+                        Target Date <span>(optional)</span>
+                    </label>
+
+                    <input
+                        type="date"
+                        id="goal-date">
+
+                </div>
+
+            </div>
+
+
+            <!-- TIME -->
+
+            <div class="form-group">
+
+                <label for="task-time">
+                    Time <span>(optional)</span>
+                </label>
+
+                <input
+                    type="time"
+                    id="task-time">
+
+            </div>
+
+
+            <!-- TEXT COLOR -->
+
+            <div class="form-group">
+
+                <label>Text Color</label>
+
+                <div class="color-options">
+
+                    <button
+                        type="button"
+                        class="color-option active"
+                        data-color="default"
+                        aria-label="Warna default">
+                    </button>
+
+                    <button
+                        type="button"
+                        class="color-option"
+                        data-color="blue"
+                        aria-label="Warna biru">
+                    </button>
+
+                    <button
+                        type="button"
+                        class="color-option"
+                        data-color="pink"
+                        aria-label="Warna pink">
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TASK ICON -->
+
+            <div class="form-group">
+
+                <label>Task Icon</label>
+
+                <div class="icon-options">
+
+                    <button
+                        type="button"
+                        class="icon-option active"
+                        data-icon="-">
+                        -
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="•">
+                        •
+                    </button>
+
+                    <button
+                        type="button"
+                        class="icon-option"
+                        data-icon="□">
+                        □
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="save-task-button"
+                id="save-task-button">
+                Add Task
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= THEME MODAL ================= -->
+
+    <div class="modal-overlay" id="theme-modal">
+
+        <div class="modal theme-modal">
+
+            <div class="modal-header">
+
+                <div>
+                    <h2>Customize ArSaDo</h2>
+                    <p class="modal-subtitle">
+                        Make it feel like yours.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="close-button"
+                    id="close-theme-modal"
+                    aria-label="Tutup">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="theme-section">
+
+                <label>Theme</label>
+
+                <div class="theme-options">
+
+                    <button
+                        type="button"
+                        class="theme-option"
+                        data-theme="light">
+
+                        <span class="theme-preview theme-light"></span>
+
+                        <span>
+                            <strong>Light</strong>
+                            <small>Clean & soft</small>
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="theme-option"
+                        data-theme="blue">
+
+                        <span class="theme-preview theme-blue"></span>
+
+                        <span>
+                            <strong>Blue</strong>
+                            <small>Calm & fresh</small>
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="theme-option"
+                        data-theme="pink">
+
+                        <span class="theme-preview theme-pink"></span>
+
+                        <span>
+                            <strong>Pink</strong>
+                            <small>Soft & warm</small>
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- FONT -->
+
+            <div class="theme-section">
+
+                <label for="font-selector">
+                    Font
+                </label>
+
+                <select id="font-selector">
+
+                    <option value="Inter">
+                        Inter
+                    </option>
+
+                    <option value="Poppins">
+                        Poppins
+                    </option>
+
+                    <option value="Nunito">
+                        Nunito
+                    </option>
+
+                    <option value="Montserrat">
+                        Montserrat
+                    </option>
+
+                    <option value="Quicksand">
+                        Quicksand
+                    </option>
+
+                    <option value="Playfair Display">
+                        Playfair Display
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <p>Made with ♡ — ArSaDo</p>
+
+        <span>
+            Plan it. Do it. Grow.
+        </span>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
